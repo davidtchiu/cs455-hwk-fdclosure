@@ -2,20 +2,21 @@ import java.util.Set;
 import java.util.HashSet;
 
 /**
- * Some useful methods on FD sets
+ * This utility class is not meant to be instantitated, and just provides some
+ * useful methods on FD sets.
  * 
- * @author David
- * @version 5/18/2022
+ * @author <<YOUR NAME>>
+ * @version <<DATE>>
  */
-public class FDUtil {
+public final class FDUtil {
 
   /**
-   * Resolves trivial FDs in the given FD set and combines with the given FD set
+   * Resolves all trivial FDs in the given set of FDs
    * 
    * @param fdset (Immutable) FD Set
-   * @return the given FD unioned with its trivial FDs
+   * @return a set of trivial FDs with respect to the given FDSet
    */
-  public static FDSet trivial(FDSet fdset) {
+  public static FDSet trivial(final FDSet fdset) {
     // TODO: Obtain the power set of each FD's left-hand attributes. For each
     // element in the power set, create a new FD and add it to the result.
 
@@ -23,13 +24,13 @@ public class FDUtil {
   }
 
   /**
-   * Augments every FD in the given set with all subsets of the given attributes
+   * Augments every FD in the given set of FDs with the given attributes
    * 
-   * @param fdset (Immutable) FD Set
-   * @param attrs a set of attributes with which to augment FDs
-   * @return the given FD unioned with the set of augmented FDs
+   * @param fdset FD Set (Immutable)
+   * @param attrs a set of attributes with which to augment FDs (Immutable)
+   * @return a set of augmented FDs
    */
-  public static FDSet augment(FDSet fdset, Set<String> attrs) {
+  public static FDSet augment(final FDSet fdset, final Set<String> attrs) {
     // TODO: Clone each FD and then union of both sides with the given set of
     // attributes, and add this new FD to the result.
 
@@ -37,12 +38,12 @@ public class FDUtil {
   }
 
   /**
-   * Resolves transitive FDs and combines them with the given FD set
+   * Exhaustively resolves transitive FDs with respect to the given set of FDs
    * 
    * @param fdset (Immutable) FD Set
-   * @return the given FD unioned with all transitive FDs
+   * @return all transitive FDs with respect to the input FD set
    */
-  public static FDSet transitive(FDSet fdset) {
+  public static FDSet transitive(final FDSet fdset) {
     // TODO: Examine each pair of FDs in the given set. If the transitive property
     // holds on the pair of FDs, then generate the new FD and add it to the result.
     // Repeat until no new transitive FDs are found.
@@ -53,10 +54,10 @@ public class FDUtil {
   /**
    * Generates the closure of the given FD Set
    * 
-   * @param fset (Immutable) FD Set
-   * @return the closure of the given FD Set
+   * @param fdset (Immutable) FD Set
+   * @return the closure of the input FD Set
    */
-  public static FDSet fdSetClosure(FDSet fdset) {
+  public static FDSet fdSetClosure(final FDSet fdset) {
     // TODO: Generate new FDs by applying Trivial and Augmentation Rules, followed
     // by Transitivity Rule, and add new FDs to the result.
     // Repeat until no further changes are detected.
@@ -65,13 +66,14 @@ public class FDUtil {
   }
 
   /**
-   * Generates the power set of the given set of elements
+   * Generates the power set of the given set (that is, all subsets of
+   * the given set of elements)
    * 
    * @param set Any set of elements (Immutable)
    * @return the power set of the input set
    */
   @SuppressWarnings("unchecked")
-  public static <E> Set<Set<E>> powerSet(Set<E> set) {
+  public static <E> Set<Set<E>> powerSet(final Set<E> set) {
 
     // base case: power set of the empty set is the set containing the empty set
     if (set.size() == 0) {
