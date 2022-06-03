@@ -22,6 +22,16 @@ public class FD implements Comparable<FD> {
   }
 
   /**
+   * Copy constructor creates a deep copy (clone) of the given FD
+   * 
+   * @param original an FD to copy
+   */
+  public FD(FD original) {
+    this.left = new TreeSet<>(original.left);
+    this.right = new TreeSet<>(original.right);
+  }
+
+  /**
    * Creation of a functional dependency
    * 
    * @param left  An attribute set on the left
@@ -47,14 +57,14 @@ public class FD implements Comparable<FD> {
    * @return the attribute set on the left hand side of the FD
    */
   public Set<String> getLeft() {
-    return this.left;
+    return new TreeSet<>(this.left);
   }
 
   /**
    * @return the attribute set on the right hand side of the FD
    */
   public Set<String> getRight() {
-    return this.right;
+    return new TreeSet<>(this.right);
   }
 
   /**
@@ -63,7 +73,7 @@ public class FD implements Comparable<FD> {
    * @param attrs Set of attributes
    */
   public void addToLeft(Set<String> attrs) {
-    this.left.addAll(attrs);
+    this.left.addAll(new TreeSet<>(attrs));
   }
 
   /**
@@ -72,7 +82,7 @@ public class FD implements Comparable<FD> {
    * @param attrs Set of attributes
    */
   public void addToRight(Set<String> attrs) {
-    this.right.addAll(attrs);
+    this.right.addAll(new TreeSet<>(attrs));
   }
 
   /**
@@ -105,17 +115,6 @@ public class FD implements Comparable<FD> {
   }
 
   /**
-   * @return a deep copy of this functional dependency
-   */
-  @Override
-  @SuppressWarnings("unchecked")
-  public Object clone() {
-    Set<String> leftCpy = (TreeSet<String>) ((TreeSet<String>) this.left).clone();
-    Set<String> rightCpy = (TreeSet<String>) ((TreeSet<String>) this.right).clone();
-    return new FD(leftCpy, rightCpy);
-  }
-
-  /**
    * Tests whether two FDs are equal
    */
   @Override
@@ -128,7 +127,16 @@ public class FD implements Comparable<FD> {
    */
   @Override
   public String toString() {
-    return this.left.toString() + " --> " + this.right.toString();
+    // Leaves commas if there's an attribute that's multi-character
+    Set<String> union = new TreeSet<>(this.left);
+    union.addAll(this.right);
+    for (String attr : union) {
+      if (attr.length() > 1) {
+        return (this.left.toString().replaceAll("( )", "") + " --> "
+            + this.right.toString().replaceAll("( )", ""));
+      }
+    }
+    return (this.left + " --> " + this.right).replaceAll("(, |\\[|\\])", "");
   }
 
   /**
