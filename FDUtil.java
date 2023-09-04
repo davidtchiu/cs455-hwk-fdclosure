@@ -84,25 +84,16 @@ public final class FDUtil {
       return basePset;
     }
 
-    // remove the first element from the current set
-    E[] attrs = (E[]) set.toArray();
-    set.remove(attrs[0]);
+    // Recursive case
 
-    // recurse and obtain the power set of the reduced set of elements
-    Set<Set<E>> currentPset = FDUtil.powerSet(set);
+    // TODO: remove the first element from the current input set
 
-    // restore the element from input set
-    set.add(attrs[0]);
+    // TODO: recurse and obtain the power set of the reduced set of elements
 
-    // iterate through all elements of current power set and union with first
-    // element
-    Set<Set<E>> otherPset = new HashSet<>();
-    for (Set<E> attrSet : currentPset) {
-      Set<E> otherAttrSet = new HashSet<>(attrSet);
-      otherAttrSet.add(attrs[0]);
-      otherPset.add(otherAttrSet);
-    }
-    currentPset.addAll(otherPset);
-    return currentPset;
+    // TODO: iterate through all elements of current power set and union with first
+    // element, then add all those sets to the power set you just obtained recursively.
+
+    // TODO: Return the power set
+    return null;
   }
 }
